@@ -1,0 +1,31 @@
+# Run build using Ubuntu Linux
+image: Ubuntu
+
+# Test against the latest version of this Node.js version
+environment:
+  matrix:
+    # node.js
+    - nodejs_version: "8"
+    - nodejs_version: "10"
+
+# Install scripts. (runs after repo cloning)
+install:
+  # Get the latest stable version of Node.js or io.js
+  - cmd: Install-Product node $env:nodejs_version
+
+# Build scripts (runs after install scripts)
+build_script:
+  # install modules
+  - npm install
+
+after_build:
+  # Run linter
+  - npm run lint
+
+# Post-build test scripts.
+test_script:
+  # Output useful info for debugging.
+  - node --version
+  - npm --version
+  # run tests
+  #  - npm test
